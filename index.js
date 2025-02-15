@@ -13,13 +13,15 @@ module.exports = async (req, res) => {
   try {
     const streamingUrl = new URL(url);
     
-    // Certifique-se de que a URL fornecida é HTTP
-    if (streamingUrl.protocol !== 'http:') {
-      return res.status(400).send('Only HTTP URLs are allowed');
+    // Certifique-se de que a URL fornecida seja HTTP ou HTTPS
+    if (streamingUrl.protocol !== 'http:' && streamingUrl.protocol !== 'https:') {
+      return res.status(400).send('Only HTTP and HTTPS URLs are allowed');
     }
 
-    // Redireciona o fluxo para HTTPS
-    https.get(url, (streamRes) => {
+    // Se for HTTP, use o módulo http. Se for HTTPS, use o módulo https.
+    const protocol = streamingUrl.protocol === 'http:' ? http : https;
+
+    protocol.get(url, (streamRes) => {
       // Defina o cabeçalho de tipo de conteúdo do proxy
       res.setHeader('Content-Type', streamRes.headers['content-type']);
       res.setHeader('Access-Control-Allow-Origin', '*');
