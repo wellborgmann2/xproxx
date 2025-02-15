@@ -1,0 +1,14 @@
+{
+  "name": "streaming-proxy",
+  "version": "1.0.0",
+  "description": "Proxy for streaming HTTP to HTTPS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel start"
+  },
+  "dependencies": {
+    "http": "^0.0.1",
+    "https": "^1.0.0"
+  }
+}
